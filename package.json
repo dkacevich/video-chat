@@ -4,10 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "vite",
+    "host": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "agora-rtm-sdk": "^1.6.0-205",
+    "firebase": "^9.17.1",
+    "freeice": "^2.2.2",
     "sass": "^1.58.0",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
