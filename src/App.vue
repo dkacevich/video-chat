@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="videos">
-            <video class="video" :src-object.prop.camel="localStream" autoplay playsinline />
+            <video class="video" :src-object.prop.camel="localStream" autoplay playsinline muted />
             <video class="video" :src-object.prop.camel="remoteStream" autoplay playsinline />
         </div>
         <div class="buttons">
