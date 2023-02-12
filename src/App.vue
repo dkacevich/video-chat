@@ -43,7 +43,7 @@ const pc = ref(new RTCPeerConnection(freeice()))
 
 
 const initWebCam = async () => {
-    localStream.value = await navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+    localStream.value = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
     remoteStream.value = new MediaStream()
 
     localStream.value.getTracks().forEach(track => {
