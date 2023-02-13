@@ -1,14 +1,16 @@
 <template>
     <div class="container">
         <div class="videos">
-            <video class="video" :src-object.prop.camel="localStream" autoplay playsinline muted />
-            <video class="video" :src-object.prop.camel="remoteStream" autoplay playsinline />
+            <video class="video_offer" :src-object.prop.camel="localStream" autoplay playsinline muted />
+            <video class="video_answer" :src-object.prop.camel="remoteStream" autoplay playsinline />
         </div>
-        <div class="buttons">
-            <button @click="initWebCam">Open Webcam</button>
-            <button @click="makeCall" :disabled="callDisable">Make call</button>
+        <div class="wrapper">
+            <div class="buttons">
+                <button @click="initWebCam">Open Webcam</button>
+                <button @click="makeCall" :disabled="callDisable">Make call</button>
+                <button @click="answerCall" :disabled="answerDisable">Answer call</button>
+            </div>
             <input v-model="callInputValue" placeholder="Your call id will generated here">
-            <button @click="answerCall" :disabled="answerDisable">Answer call</button>
         </div>
     </div>
 </template>
@@ -20,7 +22,7 @@
 import { onMounted, ref } from 'vue';
 import freeice from 'freeice'
 import { initializeApp } from "firebase/app";
-import { updateDoc, getDoc, getDocs, onSnapshot, addDoc, getFirestore, collection, doc, setDoc } from "firebase/firestore";
+import { updateDoc, getDoc, onSnapshot, addDoc, getFirestore, collection, doc, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBCDi_qqSiTXNvnNtQIErHpUB9EGoahQ5Q",
@@ -35,9 +37,11 @@ const firebaseConfig = {
 const localStream = ref()
 const remoteStream = ref()
 const db = ref()
+
 const callInputValue = ref()
 const callDisable = ref(true)
 const answerDisable = ref(true)
+
 const pc = ref(new RTCPeerConnection(freeice()))
 
 
@@ -172,36 +176,66 @@ body {
 
 
 .container {
-    max-width: 1200px;
-    margin: 0px auto;
-    padding: 0 15px;
+    padding: 10px;
 }
 
 .videos {
-    margin-top: 100px;
-    display: grid;
-    gap: 50px;
-    justify-content: center;
-
-    @media (min-width: 700px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    position: relative;
 }
 
 
+.wrapper {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 6;
+}
+
 .buttons {
-    margin-top: 20px;
-    gap: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
 }
 
+button {
+    padding: 8px 14px;
+    width: 140px;
+    background: #021cb0;
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 10px;
+}
 
-.video {
-    max-width: 100%;
+input {
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    outline: none;
+}
+
+.video_offer {
+    max-width: 250px;
     border: 3px solid #ffffff;
     border-radius: 10px;
     overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+}
+
+.video_answer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #000;
 }
 </style>
